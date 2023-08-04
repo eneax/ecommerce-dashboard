@@ -2,8 +2,11 @@
 
 import * as React from "react";
 import * as z from "zod";
+import axios from "axios";
+import { useParams, useRouter } from "next/navigation";
 import { Trash } from "lucide-react";
 import { useForm } from "react-hook-form";
+import { toast } from "react-hot-toast";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Store } from "@prisma/client";
 
@@ -31,6 +34,9 @@ const settingsFormSchema = z.object({
 type SettingsFormValues = z.infer<typeof settingsFormSchema>;
 
 export const SettingsForm: React.FC<SettingsFormProps> = ({ initialData }) => {
+  const params = useParams();
+  const router = useRouter();
+
   const [open, setOpen] = React.useState(false);
   const [loading, setLoading] = React.useState(false);
 
@@ -40,7 +46,16 @@ export const SettingsForm: React.FC<SettingsFormProps> = ({ initialData }) => {
   });
 
   const onSubmit = async (values: SettingsFormValues) => {
-    console.log(values);
+    try {
+      setLoading(true);
+      await axios.patch(`/api/stores/${params.storeId}`, values);
+      router.refresh();
+      toast.success("Store updated successfully.");
+    } catch (error) {
+      toast.error("Something went wrong, please try again.");
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
