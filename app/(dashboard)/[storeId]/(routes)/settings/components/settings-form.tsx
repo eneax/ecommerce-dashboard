@@ -10,6 +10,8 @@ import { toast } from "react-hot-toast";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Store } from "@prisma/client";
 
+import { useOrigin } from "@/hooks/use-origin";
+
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import {
@@ -23,6 +25,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { Heading } from "@/components/heading";
 import { AlertModal } from "@/components/modals/alert-modal";
+import { ApiAlert } from "@/components/api-alert";
 
 interface SettingsFormProps {
   initialData: Store;
@@ -37,6 +40,7 @@ type SettingsFormValues = z.infer<typeof settingsFormSchema>;
 export const SettingsForm: React.FC<SettingsFormProps> = ({ initialData }) => {
   const params = useParams();
   const router = useRouter();
+  const origin = useOrigin();
 
   const [open, setOpen] = React.useState(false);
   const [loading, setLoading] = React.useState(false);
@@ -128,6 +132,14 @@ export const SettingsForm: React.FC<SettingsFormProps> = ({ initialData }) => {
           </Button>
         </form>
       </Form>
+
+      <Separator />
+
+      <ApiAlert
+        title="NEXT_PUBLIC_API_URL"
+        description={`${origin}/api/${params.storeId}`}
+        variant="public"
+      />
     </>
   );
 };
