@@ -1,21 +1,29 @@
-'use client';
+"use client";
 
 import Link from "next/link";
 import { useParams, usePathname } from "next/navigation";
 
 import { cn } from "@/lib/utils";
 
-export const NavbarRoutes = ({ className, ...props }: React.HTMLAttributes<HTMLElement>) => {
+export const NavbarRoutes = ({
+  className,
+  ...props
+}: React.HTMLAttributes<HTMLElement>) => {
   const pathname = usePathname();
   const params = useParams();
 
   const routes = [
     {
-      name: 'Settings',
-      href: `/${params.storeId}/settings`,
-      active: `/${params.storeId}/settings`,
+      name: "Dashboard",
+      href: `/${params.storeId}`,
+      active: pathname === `/${params.storeId}`,
     },
-  ]
+    {
+      name: "Settings",
+      href: `/${params.storeId}/settings`,
+      active: pathname === `/${params.storeId}/settings`,
+    },
+  ];
 
   return (
     <nav
@@ -27,13 +35,15 @@ export const NavbarRoutes = ({ className, ...props }: React.HTMLAttributes<HTMLE
           key={route.href}
           href={route.href}
           className={cn(
-            'text-sm font-medium transition-colors hover:text-primary',
-            route.active ? 'text-black dark:text-white' : 'text-muted-foreground'
+            "text-sm font-medium transition-colors hover:text-primary",
+            route.active
+              ? "text-black dark:text-white"
+              : "text-muted-foreground"
           )}
         >
           {route.name}
         </Link>
       ))}
     </nav>
-  )
-}
+  );
+};
