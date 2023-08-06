@@ -2,8 +2,11 @@
 
 import * as React from "react";
 import * as z from "zod";
+import axios from "axios";
+import { useParams, useRouter } from "next/navigation";
 import { Trash } from "lucide-react";
 import { useForm } from "react-hook-form";
+import { toast } from "react-hot-toast";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Billboard } from "@prisma/client";
 
@@ -36,6 +39,9 @@ type BillboardFormValues = z.infer<typeof billboardFormSchema>;
 export const BillboardForm: React.FC<BillboardFormProps> = ({
   initialData,
 }) => {
+  const router = useRouter();
+  const params = useParams();
+
   const [open, setOpen] = React.useState(false);
   const [loading, setLoading] = React.useState(false);
 
@@ -56,12 +62,50 @@ export const BillboardForm: React.FC<BillboardFormProps> = ({
     },
   });
 
+  const onSubmit = async (values: BillboardFormValues) => {
+    try {
+      setLoading(true);
+
+      if (initialData) {
+        await axios.patch(
+          `/api/${params.storeId}/billboards/${params.billboardId}`,
+          values
+        );
+      } else {
+        await axios.post(`/api/${params.storeId}/billboards`, values);
+      }
+
+      router.refresh();
+      router.push(`/${params.storeId}/billboards`);
+      toast.success(toastMessage);
+    } catch (error) {
+      toast.error("Something went wrong.");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const onDelete = async () => {
+    try {
+      setLoading(true);
+      axios.delete(`/api/${params.storeId}/billboards/${params.billboardId}`);
+      router.refresh();
+      router.push("/");
+      toast.success("Billboard deleted successfully.");
+    } catch (error) {
+      toast.error("Make sure you have no categories using this billboard.");
+    } finally {
+      setLoading(false);
+      setOpen(false);
+    }
+  };
+
   return (
     <>
       <AlertModal
         isOpen={open}
         onClose={() => setOpen(false)}
-        onConfirm={() => {}}
+        onConfirm={onDelete}
         loading={loading}
       />
 
@@ -75,6 +119,7 @@ export const BillboardForm: React.FC<BillboardFormProps> = ({
             onClick={() => setOpen(true)}
           >
             <Trash className="mr-2 w-4 h-4" />
+            Delete
           </Button>
         )}
       </div>
@@ -83,7 +128,7 @@ export const BillboardForm: React.FC<BillboardFormProps> = ({
 
       <Form {...form}>
         <form
-          onSubmit={form.handleSubmit(() => console.log("submit"))}
+          onSubmit={form.handleSubmit(onSubmit)}
           className="w-full space-y-8"
         >
           <FormField
