@@ -19,6 +19,11 @@ export const NavbarRoutes = ({
       active: pathname === `/${params.storeId}`,
     },
     {
+      name: "Billboards",
+      href: `/${params.storeId}/billboards`,
+      active: pathname === `/${params.storeId}/billboards`,
+    },
+    {
       name: "Settings",
       href: `/${params.storeId}/settings`,
       active: pathname === `/${params.storeId}/settings`,
