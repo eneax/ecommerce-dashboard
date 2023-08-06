@@ -20,6 +20,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { Heading } from "@/components/heading";
 import { AlertModal } from "@/components/modals/alert-modal";
+import { ImageUpload } from "@/components/image-upload";
 
 interface BillboardFormProps {
   initialData: Billboard | null;
@@ -85,6 +86,25 @@ export const BillboardForm: React.FC<BillboardFormProps> = ({
           onSubmit={form.handleSubmit(() => console.log("submit"))}
           className="w-full space-y-8"
         >
+          <FormField
+            control={form.control}
+            name="imageUrl"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Background Image</FormLabel>
+                <FormControl>
+                  <ImageUpload
+                    disabled={loading}
+                    values={field.value ? [field.value] : []}
+                    onChange={(value) => field.onChange(value)}
+                    onRemove={() => field.onChange("")}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+
           <div className="grid grid-cols-3 gap-8">
             <FormField
               control={form.control}
