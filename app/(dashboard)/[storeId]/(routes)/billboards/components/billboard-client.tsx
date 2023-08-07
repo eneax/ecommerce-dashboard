@@ -35,7 +35,7 @@ export function BillboardClient({ data }: BillboardClientProps) {
 
       <Separator />
 
-      <DataTable columns={columns} data={data} />
+      <DataTable searchKey="label" columns={columns} data={data} />
     </>
   );
 }
