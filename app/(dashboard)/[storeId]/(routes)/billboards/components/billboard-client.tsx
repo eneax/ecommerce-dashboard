@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { Heading } from "@/components/heading";
 import { DataTable } from "@/components/data-table";
+import { ApiList } from "@/components/api-list";
 
 import { BillboardColumn, columns } from "./columns";
 
@@ -36,6 +37,12 @@ export function BillboardClient({ data }: BillboardClientProps) {
       <Separator />
 
       <DataTable searchKey="label" columns={columns} data={data} />
+
+      <Heading title="API" description="API calls for billboards" />
+
+      <Separator />
+
+      <ApiList entityName="billboards" entityIdName="billboardId" />
     </>
   );
 }
