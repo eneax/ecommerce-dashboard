@@ -1,6 +1,7 @@
 "use client";
 
 import { Copy, Edit, MoreHorizontal, Trash } from "lucide-react";
+import { toast } from "react-hot-toast";
 
 import {
   DropdownMenu,
@@ -17,6 +18,11 @@ interface CellActionProps {
 }
 
 export function CellAction({ data }: CellActionProps) {
+  const onCopy = (id: string) => {
+    navigator.clipboard.writeText(id);
+    toast.success("Copied!");
+  };
+
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
@@ -27,7 +33,7 @@ export function CellAction({ data }: CellActionProps) {
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end">
         <DropdownMenuLabel>Actions</DropdownMenuLabel>
-        <DropdownMenuItem>
+        <DropdownMenuItem onClick={() => onCopy(data.id)}>
           <Copy className="mr-2 w-4 h-4" />
           Copy ID
         </DropdownMenuItem>
