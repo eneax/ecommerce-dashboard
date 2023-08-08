@@ -1,5 +1,6 @@
 "use client";
 
+import { useParams, useRouter } from "next/navigation";
 import { Copy, Edit, MoreHorizontal, Trash } from "lucide-react";
 import { toast } from "react-hot-toast";
 
@@ -18,6 +19,9 @@ interface CellActionProps {
 }
 
 export function CellAction({ data }: CellActionProps) {
+  const router = useRouter();
+  const params = useParams();
+
   const onCopy = (id: string) => {
     navigator.clipboard.writeText(id);
     toast.success("Copied!");
@@ -37,7 +41,11 @@ export function CellAction({ data }: CellActionProps) {
           <Copy className="mr-2 w-4 h-4" />
           Copy ID
         </DropdownMenuItem>
-        <DropdownMenuItem>
+        <DropdownMenuItem
+          onClick={() =>
+            router.push(`/${params.storeId}/billboards/${data.id}`)
+          }
+        >
           <Edit className="mr-2 w-4 h-4" />
           Update
         </DropdownMenuItem>
