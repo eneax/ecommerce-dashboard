@@ -24,6 +24,11 @@ export const NavbarRoutes = ({
       active: pathname === `/${params.storeId}/billboards`,
     },
     {
+      name: "Categories",
+      href: `/${params.storeId}/categories`,
+      active: pathname === `/${params.storeId}/categories`,
+    },
+    {
       name: "Settings",
       href: `/${params.storeId}/settings`,
       active: pathname === `/${params.storeId}/settings`,
