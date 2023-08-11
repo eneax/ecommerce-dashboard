@@ -40,7 +40,7 @@ export function CellAction({ data }: CellActionProps) {
       router.refresh();
       toast.success("Category deleted successfully.");
     } catch (error) {
-      toast.error("Something went wrong.");
+      toast.error("Make sure you remove all products from this category.");
     } finally {
       setOpen(false);
       setLoading(false);
