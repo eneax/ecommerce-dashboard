@@ -127,7 +127,7 @@ export const ProductForm: React.FC<ProductFormProps> = ({
       router.push(`/${params.storeId}/products`);
       toast.success("Product deleted successfully.");
     } catch (error) {
-      toast.error("Make sure you have no categories using this product.");
+      toast.error("Something went wrong.");
     } finally {
       setLoading(false);
       setOpen(false);
