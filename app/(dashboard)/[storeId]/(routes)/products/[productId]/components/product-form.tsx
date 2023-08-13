@@ -19,6 +19,7 @@ import {
   FormLabel,
   FormControl,
   FormMessage,
+  FormDescription,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import {
@@ -28,6 +29,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { Checkbox } from "@/components/ui/checkbox";
 import { Heading } from "@/components/heading";
 import { AlertModal } from "@/components/modals/alert-modal";
 import { ImageUpload } from "@/components/image-upload";
@@ -206,6 +208,7 @@ export const ProductForm: React.FC<ProductFormProps> = ({
                 </FormItem>
               )}
             />
+
             <FormField
               control={form.control}
               name="price"
@@ -224,6 +227,7 @@ export const ProductForm: React.FC<ProductFormProps> = ({
                 </FormItem>
               )}
             />
+
             <FormField
               control={form.control}
               name="categoryId"
@@ -256,6 +260,7 @@ export const ProductForm: React.FC<ProductFormProps> = ({
                 </FormItem>
               )}
             />
+
             <FormField
               control={form.control}
               name="sizeId"
@@ -288,6 +293,7 @@ export const ProductForm: React.FC<ProductFormProps> = ({
                 </FormItem>
               )}
             />
+
             <FormField
               control={form.control}
               name="colorId"
@@ -317,6 +323,48 @@ export const ProductForm: React.FC<ProductFormProps> = ({
                     </SelectContent>
                   </Select>
                   <FormMessage />
+                </FormItem>
+              )}
+            />
+
+            <FormField
+              control={form.control}
+              name="isFeatured"
+              render={({ field }) => (
+                <FormItem className="flex items-start space-x-3 space-y-0 rounded-md border p-4">
+                  <FormControl>
+                    <Checkbox
+                      checked={field.value}
+                      onCheckedChange={field.onChange}
+                    />
+                  </FormControl>
+                  <div className="space-y-1 leading-none">
+                    <FormLabel>Featured</FormLabel>
+                    <FormDescription>
+                      This product will be shown on the home page
+                    </FormDescription>
+                  </div>
+                </FormItem>
+              )}
+            />
+
+            <FormField
+              control={form.control}
+              name="isArchived"
+              render={({ field }) => (
+                <FormItem className="flex items-start space-x-3 space-y-0 rounded-md border p-4">
+                  <FormControl>
+                    <Checkbox
+                      checked={field.value}
+                      onCheckedChange={field.onChange}
+                    />
+                  </FormControl>
+                  <div className="space-y-1 leading-none">
+                    <FormLabel>Archived</FormLabel>
+                    <FormDescription>
+                      This product will be hidden from the store
+                    </FormDescription>
+                  </div>
                 </FormItem>
               )}
             />
