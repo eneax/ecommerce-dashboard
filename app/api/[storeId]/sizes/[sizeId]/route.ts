@@ -34,7 +34,7 @@ export async function PATCH(
     const { name, value } = await req.json();
 
     if (!userId) {
-      return new NextResponse("Unauthenticated", { status: 401 });
+      return new NextResponse("Unauthenticated", { status: 403 });
     }
 
     if (!name) {
@@ -57,10 +57,10 @@ export async function PATCH(
     });
 
     if (!storeByUserId) {
-      return new NextResponse("Unauthorized", { status: 403 });
+      return new NextResponse("Unauthorized", { status: 405 });
     }
 
-    const size = await prismaDb.size.updateMany({
+    const size = await prismaDb.size.update({
       where: {
         id: params.sizeId,
       },
@@ -85,7 +85,7 @@ export async function DELETE(
     const { userId } = auth();
 
     if (!userId) {
-      return new NextResponse("Unauthenticated", { status: 401 });
+      return new NextResponse("Unauthenticated", { status: 403 });
     }
 
     if (!params.sizeId) {
@@ -100,10 +100,10 @@ export async function DELETE(
     });
 
     if (!storeByUserId) {
-      return new NextResponse("Unauthorized", { status: 403 });
+      return new NextResponse("Unauthorized", { status: 405 });
     }
 
-    const size = await prismaDb.size.deleteMany({
+    const size = await prismaDb.size.delete({
       where: {
         id: params.sizeId,
       },
