@@ -37,7 +37,7 @@ export async function PATCH(
     const { name, billboardId } = await req.json();
 
     if (!userId) {
-      return new NextResponse("Unauthenticated", { status: 401 });
+      return new NextResponse("Unauthenticated", { status: 403 });
     }
 
     if (!name) {
@@ -60,10 +60,10 @@ export async function PATCH(
     });
 
     if (!storeByUserId) {
-      return new NextResponse("Unauthorized", { status: 403 });
+      return new NextResponse("Unauthorized", { status: 405 });
     }
 
-    const category = await prismaDb.category.updateMany({
+    const category = await prismaDb.category.update({
       where: {
         id: params.categoryId,
       },
@@ -88,7 +88,7 @@ export async function DELETE(
     const { userId } = auth();
 
     if (!userId) {
-      return new NextResponse("Unauthenticated", { status: 401 });
+      return new NextResponse("Unauthenticated", { status: 403 });
     }
 
     if (!params.categoryId) {
@@ -103,10 +103,10 @@ export async function DELETE(
     });
 
     if (!storeByUserId) {
-      return new NextResponse("Unauthorized", { status: 403 });
+      return new NextResponse("Unauthorized", { status: 405 });
     }
 
-    const category = await prismaDb.category.deleteMany({
+    const category = await prismaDb.category.delete({
       where: {
         id: params.categoryId,
       },
