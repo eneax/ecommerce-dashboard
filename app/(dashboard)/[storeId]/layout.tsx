@@ -1,28 +1,31 @@
-import { redirect } from 'next/navigation'
-import { auth } from "@clerk/nextjs"
+import { redirect } from "next/navigation";
+import { auth } from "@clerk/nextjs";
 
-import prismaDb from '@/lib/prisma-db'
-import { Navbar } from '@/components/navbar'
+import prismaDb from "@/lib/prisma-db";
+import { Navbar } from "@/components/navbar";
 
-export default async function DashboardLayout({ children, params }: {
-  children: React.ReactNode
-  params: { storeId: string }
+export default async function DashboardLayout({
+  children,
+  params,
+}: {
+  children: React.ReactNode;
+  params: { storeId: string };
 }) {
-  const { userId } = auth()
+  const { userId } = auth();
 
   if (!userId) {
-    redirect('/sign-in')
+    redirect("/sign-in");
   }
 
   const store = await prismaDb.store.findFirst({
     where: {
       id: params.storeId,
-      userId
-    }
-  })
+      userId,
+    },
+  });
 
   if (!store) {
-    redirect('/')
+    redirect("/");
   }
 
   return (
@@ -30,5 +33,5 @@ export default async function DashboardLayout({ children, params }: {
       <Navbar />
       {children}
     </>
-  )
+  );
 }
