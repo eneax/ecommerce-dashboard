@@ -34,7 +34,7 @@ export async function PATCH(
     const { name, value } = await req.json();
 
     if (!userId) {
-      return new NextResponse("Unauthenticated", { status: 401 });
+      return new NextResponse("Unauthenticated", { status: 403 });
     }
 
     if (!name) {
@@ -57,10 +57,10 @@ export async function PATCH(
     });
 
     if (!storeByUserId) {
-      return new NextResponse("Unauthorized", { status: 403 });
+      return new NextResponse("Unauthorized", { status: 405 });
     }
 
-    const color = await prismaDb.color.updateMany({
+    const color = await prismaDb.color.update({
       where: {
         id: params.colorId,
       },
@@ -85,7 +85,7 @@ export async function DELETE(
     const { userId } = auth();
 
     if (!userId) {
-      return new NextResponse("Unauthenticated", { status: 401 });
+      return new NextResponse("Unauthenticated", { status: 403 });
     }
 
     if (!params.colorId) {
@@ -100,10 +100,10 @@ export async function DELETE(
     });
 
     if (!storeByUserId) {
-      return new NextResponse("Unauthorized", { status: 403 });
+      return new NextResponse("Unauthorized", { status: 405 });
     }
 
-    const color = await prismaDb.color.deleteMany({
+    const color = await prismaDb.color.delete({
       where: {
         id: params.colorId,
       },
