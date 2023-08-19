@@ -31,17 +31,17 @@ export async function PATCH(
 ) {
   try {
     const { userId } = auth();
-    const body = await req.json();
+    const { label, imageUrl } = await req.json();
 
     if (!userId) {
-      return new NextResponse("Unauthenticated", { status: 401 });
+      return new NextResponse("Unauthenticated", { status: 403 });
     }
 
-    if (!body.label) {
+    if (!label) {
       return new NextResponse("Label is required", { status: 400 });
     }
 
-    if (!body.imageUrl) {
+    if (!imageUrl) {
       return new NextResponse("Image URL is required", { status: 400 });
     }
 
@@ -57,16 +57,16 @@ export async function PATCH(
     });
 
     if (!storeByUserId) {
-      return new NextResponse("Unauthorized", { status: 403 });
+      return new NextResponse("Unauthorized", { status: 405 });
     }
 
-    const billboard = await prismaDb.billboard.updateMany({
+    const billboard = await prismaDb.billboard.update({
       where: {
         id: params.billboardId,
       },
       data: {
-        label: body.label,
-        imageUrl: body.imageUrl,
+        label,
+        imageUrl,
       },
     });
 
@@ -85,7 +85,7 @@ export async function DELETE(
     const { userId } = auth();
 
     if (!userId) {
-      return new NextResponse("Unauthenticated", { status: 401 });
+      return new NextResponse("Unauthenticated", { status: 403 });
     }
 
     if (!params.billboardId) {
@@ -100,10 +100,10 @@ export async function DELETE(
     });
 
     if (!storeByUserId) {
-      return new NextResponse("Unauthorized", { status: 403 });
+      return new NextResponse("Unauthorized", { status: 405 });
     }
 
-    const billboard = await prismaDb.billboard.deleteMany({
+    const billboard = await prismaDb.billboard.delete({
       where: {
         id: params.billboardId,
       },

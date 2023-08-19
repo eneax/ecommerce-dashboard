@@ -1,6 +1,7 @@
-import prismaDb from "@/lib/prisma-db";
-import { auth } from "@clerk/nextjs";
 import { NextResponse } from "next/server";
+import { auth } from "@clerk/nextjs";
+
+import prismaDb from "@/lib/prisma-db";
 
 export async function GET(
   _req: Request,
@@ -30,11 +31,10 @@ export async function POST(
 ) {
   try {
     const { userId } = auth();
-    const body = await req.json();
-    const { label, imageUrl } = body;
+    const { label, imageUrl } = await req.json();
 
     if (!userId) {
-      return new NextResponse("Unauthenticated", { status: 401 });
+      return new NextResponse("Unauthenticated", { status: 403 });
     }
 
     if (!label) {
@@ -57,7 +57,7 @@ export async function POST(
     });
 
     if (!storeByUserId) {
-      return new NextResponse("Unauthorized", { status: 403 });
+      return new NextResponse("Unauthorized", { status: 405 });
     }
 
     const billboard = await prismaDb.billboard.create({
