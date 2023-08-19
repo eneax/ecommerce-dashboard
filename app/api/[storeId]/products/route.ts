@@ -1,6 +1,7 @@
-import prismaDb from "@/lib/prisma-db";
-import { auth } from "@clerk/nextjs";
 import { NextResponse } from "next/server";
+import { auth } from "@clerk/nextjs";
+
+import prismaDb from "@/lib/prisma-db";
 
 export async function GET(
   req: Request,
@@ -62,7 +63,7 @@ export async function POST(
     } = await req.json();
 
     if (!userId) {
-      return new NextResponse("Unauthenticated", { status: 401 });
+      return new NextResponse("Unauthenticated", { status: 403 });
     }
 
     if (!name) {
@@ -101,7 +102,7 @@ export async function POST(
     });
 
     if (!storeByUserId) {
-      return new NextResponse("Unauthorized", { status: 403 });
+      return new NextResponse("Unauthorized", { status: 405 });
     }
 
     const product = await prismaDb.product.create({

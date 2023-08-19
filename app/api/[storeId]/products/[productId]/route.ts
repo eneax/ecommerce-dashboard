@@ -49,7 +49,7 @@ export async function PATCH(
     } = await req.json();
 
     if (!userId) {
-      return new NextResponse("Unauthenticated", { status: 401 });
+      return new NextResponse("Unauthenticated", { status: 403 });
     }
 
     if (!name) {
@@ -88,7 +88,7 @@ export async function PATCH(
     });
 
     if (!storeByUserId) {
-      return new NextResponse("Unauthorized", { status: 403 });
+      return new NextResponse("Unauthorized", { status: 405 });
     }
 
     await prismaDb.product.update({
@@ -116,7 +116,7 @@ export async function PATCH(
       data: {
         images: {
           createMany: {
-            data: images.map((image: { url: string }) => image),
+            data: [...images.map((image: { url: string }) => image)],
           },
         },
       },
@@ -137,7 +137,7 @@ export async function DELETE(
     const { userId } = auth();
 
     if (!userId) {
-      return new NextResponse("Unauthenticated", { status: 401 });
+      return new NextResponse("Unauthenticated", { status: 403 });
     }
 
     if (!params.productId) {
@@ -152,10 +152,10 @@ export async function DELETE(
     });
 
     if (!storeByUserId) {
-      return new NextResponse("Unauthorized", { status: 403 });
+      return new NextResponse("Unauthorized", { status: 405 });
     }
 
-    const product = await prismaDb.product.deleteMany({
+    const product = await prismaDb.product.delete({
       where: {
         id: params.productId,
       },
