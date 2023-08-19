@@ -2,6 +2,7 @@ import { redirect } from "next/navigation";
 import { auth } from "@clerk/nextjs";
 
 import prismaDb from "@/lib/prisma-db";
+
 import { SettingsForm } from "./components/settings-form";
 
 interface SettingsPageProps {
@@ -10,7 +11,7 @@ interface SettingsPageProps {
   };
 }
 
-const SettingsPage: React.FC<SettingsPageProps> = async ({ params }) => {
+export default async function SettingsPage({ params }: SettingsPageProps) {
   const { userId } = auth();
 
   if (!userId) {
@@ -35,6 +36,4 @@ const SettingsPage: React.FC<SettingsPageProps> = async ({ params }) => {
       </div>
     </div>
   );
-};
-
-export default SettingsPage;
+}

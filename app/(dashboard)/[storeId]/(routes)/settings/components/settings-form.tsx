@@ -32,7 +32,7 @@ interface SettingsFormProps {
 }
 
 const settingsFormSchema = z.object({
-  name: z.string().min(1),
+  name: z.string().min(2),
 });
 
 type SettingsFormValues = z.infer<typeof settingsFormSchema>;
@@ -57,7 +57,7 @@ export const SettingsForm: React.FC<SettingsFormProps> = ({ initialData }) => {
       router.refresh();
       toast.success("Store updated successfully.");
     } catch (error) {
-      toast.error("Something went wrong, please try again.");
+      toast.error("Something went wrong.");
     } finally {
       setLoading(false);
     }
@@ -71,7 +71,7 @@ export const SettingsForm: React.FC<SettingsFormProps> = ({ initialData }) => {
       router.push("/");
       toast.success("Store deleted successfully.");
     } catch (error) {
-      toast.error("Make sure you remove all products and categories first.");
+      toast.error("Make sure you removed all products and categories first.");
     } finally {
       setLoading(false);
       setOpen(false);
@@ -127,7 +127,7 @@ export const SettingsForm: React.FC<SettingsFormProps> = ({ initialData }) => {
             />
           </div>
 
-          <Button disabled={loading} type="submit">
+          <Button disabled={loading} type="submit" className="ml-auto">
             Save
           </Button>
         </form>
