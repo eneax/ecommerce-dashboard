@@ -53,7 +53,6 @@ export const SizeForm: React.FC<SizeFormProps> = ({ initialData }) => {
     resolver: zodResolver(sizeFormSchema),
     defaultValues: initialData || {
       name: "",
-      value: "",
     },
   });
 
@@ -126,7 +125,7 @@ export const SizeForm: React.FC<SizeFormProps> = ({ initialData }) => {
           onSubmit={form.handleSubmit(onSubmit)}
           className="w-full space-y-8"
         >
-          <div className="grid grid-cols-3 gap-8">
+          <div className="md:grid md:grid-cols-3 gap-8">
             <FormField
               control={form.control}
               name="name"
@@ -163,7 +162,7 @@ export const SizeForm: React.FC<SizeFormProps> = ({ initialData }) => {
             />
           </div>
 
-          <Button disabled={loading} type="submit">
+          <Button disabled={loading} type="submit" className="ml-auto">
             {action}
           </Button>
         </form>

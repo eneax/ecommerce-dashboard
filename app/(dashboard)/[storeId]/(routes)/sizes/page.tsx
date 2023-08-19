@@ -1,16 +1,17 @@
 import { format } from "date-fns";
+
 import prismaDb from "@/lib/prisma-db";
 
 import { SizeClient } from "./components/size-client";
 import { SizeColumn } from "./components/columns";
 
-const SizesPage = async ({
+export default async function SizesPage({
   params,
 }: {
   params: {
     storeId: string;
   };
-}) => {
+}) {
   const sizes = await prismaDb.size.findMany({
     where: {
       storeId: params.storeId,
@@ -34,6 +35,4 @@ const SizesPage = async ({
       </div>
     </div>
   );
-};
-
-export default SizesPage;
+}

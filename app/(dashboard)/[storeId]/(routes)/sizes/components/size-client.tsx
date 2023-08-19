@@ -24,7 +24,7 @@ export function SizeClient({ data }: SizeClientProps) {
       <div className="flex items-center justify-between">
         <Heading
           title={`Sizes (${data.length})`}
-          description="Manage the store sizes"
+          description="Manage sizes for your products"
         />
         <Button onClick={() => router.push(`/${params.storeId}/sizes/new`)}>
           <Plus className="mr-2 w-4 h-4" />

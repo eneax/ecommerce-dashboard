@@ -33,7 +33,7 @@ export function CellAction({ data }: CellActionProps) {
     toast.success("Copied!");
   };
 
-  const onDelete = async () => {
+  const onConfirm = async () => {
     try {
       setLoading(true);
       await axios.delete(`/api/${params.storeId}/sizes/${data.id}`);
@@ -52,7 +52,7 @@ export function CellAction({ data }: CellActionProps) {
       <AlertModal
         isOpen={open}
         onClose={() => setOpen(false)}
-        onConfirm={onDelete}
+        onConfirm={onConfirm}
         loading={loading}
       />
 
@@ -76,8 +76,8 @@ export function CellAction({ data }: CellActionProps) {
             Update
           </DropdownMenuItem>
           <DropdownMenuItem onClick={() => setOpen(true)}>
-            <Trash className="mr-2 w-4 h-4 text-destructive" />
-            <span className="text-destructive">Delete</span>
+            <Trash className="mr-2 w-4 h-4" />
+            <span>Delete</span>
           </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
