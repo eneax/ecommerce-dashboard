@@ -85,7 +85,7 @@ export const BillboardForm: React.FC<BillboardFormProps> = ({
     }
   };
 
-  const onDelete = async () => {
+  const onConfirm = async () => {
     try {
       setLoading(true);
       await axios.delete(
@@ -107,7 +107,7 @@ export const BillboardForm: React.FC<BillboardFormProps> = ({
       <AlertModal
         isOpen={open}
         onClose={() => setOpen(false)}
-        onConfirm={onDelete}
+        onConfirm={onConfirm}
         loading={loading}
       />
 
@@ -143,7 +143,7 @@ export const BillboardForm: React.FC<BillboardFormProps> = ({
                   <ImageUpload
                     disabled={loading}
                     values={field.value ? [field.value] : []}
-                    onChange={(value) => field.onChange(value)}
+                    onChange={(url) => field.onChange(url)}
                     onRemove={() => field.onChange("")}
                   />
                 </FormControl>
@@ -152,7 +152,7 @@ export const BillboardForm: React.FC<BillboardFormProps> = ({
             )}
           />
 
-          <div className="grid grid-cols-3 gap-8">
+          <div className="md:grid md:grid-cols-3 gap-8">
             <FormField
               control={form.control}
               name="label"

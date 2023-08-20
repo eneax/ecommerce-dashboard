@@ -1,16 +1,17 @@
 import { format } from "date-fns";
+
 import prismaDb from "@/lib/prisma-db";
 
 import { BillboardClient } from "./components/billboard-client";
 import { BillboardColumn } from "./components/columns";
 
-const BillboardsPage = async ({
+export default async function BillboardsPage({
   params,
 }: {
   params: {
     storeId: string;
   };
-}) => {
+}) {
   const billboards = await prismaDb.billboard.findMany({
     where: {
       storeId: params.storeId,
@@ -35,6 +36,4 @@ const BillboardsPage = async ({
       </div>
     </div>
   );
-};
-
-export default BillboardsPage;
+}

@@ -2,13 +2,13 @@ import prismaDb from "@/lib/prisma-db";
 
 import { BillboardForm } from "./components/billboard-form";
 
-const BillboardPage = async ({
+export default async function BillboardPage({
   params,
 }: {
   params: {
     billboardId: string;
   };
-}) => {
+}) {
   const billboard = await prismaDb.billboard.findUnique({
     where: {
       id: params.billboardId,
@@ -22,6 +22,4 @@ const BillboardPage = async ({
       </div>
     </div>
   );
-};
-
-export default BillboardPage;
+}
