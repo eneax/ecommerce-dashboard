@@ -1,22 +1,22 @@
 import { format } from "date-fns";
+
 import prismaDb from "@/lib/prisma-db";
 
-import { CategoryClient } from "./components/category-client";
+import { CategoriesClient } from "./components/category-client";
 import { CategoryColumn } from "./components/columns";
 
-const CategoriesPage = async ({
+export default async function CategoriesPage({
   params,
 }: {
   params: {
     storeId: string;
   };
-}) => {
+}) {
   const categories = await prismaDb.category.findMany({
     where: {
       storeId: params.storeId,
     },
     include: {
-      // populate relation with billboard
       billboard: true,
     },
     orderBy: {
@@ -34,10 +34,8 @@ const CategoriesPage = async ({
   return (
     <div className="flex-col">
       <div className="flex-1 space-y-4 p-8 pt-6">
-        <CategoryClient data={formattedCategories} />
+        <CategoriesClient data={formattedCategories} />
       </div>
     </div>
   );
-};
-
-export default CategoriesPage;
+}

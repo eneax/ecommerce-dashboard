@@ -11,11 +11,11 @@ import { ApiList } from "@/components/api-list";
 
 import { CategoryColumn, columns } from "./columns";
 
-interface CategoryClientProps {
+interface CategoriesClientProps {
   data: CategoryColumn[];
 }
 
-export function CategoryClient({ data }: CategoryClientProps) {
+export function CategoriesClient({ data }: CategoriesClientProps) {
   const router = useRouter();
   const params = useParams();
 
@@ -24,7 +24,7 @@ export function CategoryClient({ data }: CategoryClientProps) {
       <div className="flex items-center justify-between">
         <Heading
           title={`Categories (${data.length})`}
-          description="Manage your store categories"
+          description="Manage categories for your store"
         />
         <Button
           onClick={() => router.push(`/${params.storeId}/categories/new`)}

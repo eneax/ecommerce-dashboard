@@ -37,7 +37,7 @@ interface CategoryFormProps {
 }
 
 const categoryFormSchema = z.object({
-  name: z.string().min(1),
+  name: z.string().min(2),
   billboardId: z.string().min(1),
 });
 
@@ -91,7 +91,7 @@ export const CategoryForm: React.FC<CategoryFormProps> = ({
     }
   };
 
-  const onDelete = async () => {
+  const onConfirm = async () => {
     try {
       setLoading(true);
       await axios.delete(
@@ -113,7 +113,7 @@ export const CategoryForm: React.FC<CategoryFormProps> = ({
       <AlertModal
         isOpen={open}
         onClose={() => setOpen(false)}
-        onConfirm={onDelete}
+        onConfirm={onConfirm}
         loading={loading}
       />
 
@@ -139,7 +139,7 @@ export const CategoryForm: React.FC<CategoryFormProps> = ({
           onSubmit={form.handleSubmit(onSubmit)}
           className="w-full space-y-8"
         >
-          <div className="grid grid-cols-3 gap-8">
+          <div className="md:grid md:grid-cols-3 gap-8">
             <FormField
               control={form.control}
               name="name"
