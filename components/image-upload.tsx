@@ -14,12 +14,12 @@ interface ImageUploadProps {
   onRemove: (value: string) => void;
 }
 
-export const ImageUpload: React.FC<ImageUploadProps> = ({
+export function ImageUpload({
   disabled,
   values,
   onChange,
   onRemove,
-}) => {
+}: ImageUploadProps) {
   const [isMounted, setIsMounted] = React.useState(false);
 
   React.useEffect(() => {
@@ -75,4 +75,4 @@ export const ImageUpload: React.FC<ImageUploadProps> = ({
       </CldUploadWidget>
     </>
   );
-};
+}

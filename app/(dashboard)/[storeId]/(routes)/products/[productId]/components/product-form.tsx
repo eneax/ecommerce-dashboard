@@ -77,23 +77,25 @@ export const ProductForm: React.FC<ProductFormProps> = ({
     : "Product created successfully.";
   const action = initialData ? "Save" : "Create";
 
+  const defaultValues = initialData
+    ? {
+        ...initialData,
+        price: parseFloat(String(initialData?.price)),
+      }
+    : {
+        name: "",
+        images: [],
+        price: 0,
+        categoryId: "",
+        colorId: "",
+        sizeId: "",
+        isFeatured: false,
+        isArchived: false,
+      };
+
   const form = useForm<ProductFormValues>({
     resolver: zodResolver(productFormSchema),
-    defaultValues: initialData
-      ? {
-          ...initialData,
-          price: parseFloat(String(initialData?.price)),
-        }
-      : {
-          name: "",
-          images: [],
-          price: 0,
-          categoryId: "",
-          colorId: "",
-          sizeId: "",
-          isFeatured: false,
-          isArchived: false,
-        },
+    defaultValues,
   });
 
   const onSubmit = async (values: ProductFormValues) => {
@@ -190,7 +192,7 @@ export const ProductForm: React.FC<ProductFormProps> = ({
             )}
           />
 
-          <div className="grid grid-cols-3 gap-8">
+          <div className="md:grid md:grid-cols-3 gap-8">
             <FormField
               control={form.control}
               name="name"
@@ -266,7 +268,7 @@ export const ProductForm: React.FC<ProductFormProps> = ({
               name="sizeId"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Sizes</FormLabel>
+                  <FormLabel>Size</FormLabel>
                   <Select
                     disabled={loading || !sizes.length}
                     value={field.value}
@@ -299,7 +301,7 @@ export const ProductForm: React.FC<ProductFormProps> = ({
               name="colorId"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Colors</FormLabel>
+                  <FormLabel>Color</FormLabel>
                   <Select
                     disabled={loading || !colors.length}
                     value={field.value}

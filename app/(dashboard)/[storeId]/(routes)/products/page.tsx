@@ -6,13 +6,13 @@ import { formatPrice } from "@/lib/utils";
 import { ProductClient } from "./components/product-client";
 import { ProductColumn } from "./components/columns";
 
-const ProductsPage = async ({
+export default async function ProductsPage({
   params,
 }: {
   params: {
     storeId: string;
   };
-}) => {
+}) {
   const products = await prismaDb.product.findMany({
     where: {
       storeId: params.storeId,
@@ -46,6 +46,4 @@ const ProductsPage = async ({
       </div>
     </div>
   );
-};
-
-export default ProductsPage;
+}
