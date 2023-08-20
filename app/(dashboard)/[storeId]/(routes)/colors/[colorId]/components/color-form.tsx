@@ -29,9 +29,9 @@ interface ColorFormProps {
 }
 
 const colorFormSchema = z.object({
-  name: z.string().min(1),
-  value: z.string().min(4).regex(/^#/, {
-    message: "The hex color value must start with #",
+  name: z.string().min(2),
+  value: z.string().min(4).max(9).regex(/^#/, {
+    message: "String must be a valid hex code",
   }),
 });
 
@@ -55,7 +55,6 @@ export const ColorForm: React.FC<ColorFormProps> = ({ initialData }) => {
     resolver: zodResolver(colorFormSchema),
     defaultValues: initialData || {
       name: "",
-      value: "",
     },
   });
 
@@ -128,7 +127,7 @@ export const ColorForm: React.FC<ColorFormProps> = ({ initialData }) => {
           onSubmit={form.handleSubmit(onSubmit)}
           className="w-full space-y-8"
         >
-          <div className="grid grid-cols-3 gap-8">
+          <div className="md:grid md:grid-cols-3 gap-8">
             <FormField
               control={form.control}
               name="name"
@@ -146,6 +145,7 @@ export const ColorForm: React.FC<ColorFormProps> = ({ initialData }) => {
                 </FormItem>
               )}
             />
+
             <FormField
               control={form.control}
               name="value"

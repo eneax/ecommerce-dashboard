@@ -1,16 +1,17 @@
 import { format } from "date-fns";
+
 import prismaDb from "@/lib/prisma-db";
 
 import { ColorsClient } from "./components/colors-client";
 import { ColorColumn } from "./components/columns";
 
-const ColorsPage = async ({
+export default async function ColorsPage({
   params,
 }: {
   params: {
     storeId: string;
   };
-}) => {
+}) {
   const colors = await prismaDb.color.findMany({
     where: {
       storeId: params.storeId,
@@ -34,6 +35,4 @@ const ColorsPage = async ({
       </div>
     </div>
   );
-};
-
-export default ColorsPage;
+}

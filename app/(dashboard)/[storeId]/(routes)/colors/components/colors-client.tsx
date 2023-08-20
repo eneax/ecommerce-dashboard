@@ -24,7 +24,7 @@ export function ColorsClient({ data }: ColorsClientProps) {
       <div className="flex items-center justify-between">
         <Heading
           title={`Colors (${data.length})`}
-          description="Manage the store colors"
+          description="Manage colors for your products"
         />
         <Button onClick={() => router.push(`/${params.storeId}/colors/new`)}>
           <Plus className="mr-2 w-4 h-4" />

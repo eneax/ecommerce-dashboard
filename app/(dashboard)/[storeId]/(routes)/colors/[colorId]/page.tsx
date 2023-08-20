@@ -2,13 +2,13 @@ import prismaDb from "@/lib/prisma-db";
 
 import { ColorForm } from "./components/color-form";
 
-const ColorPage = async ({
+export default async function ColorPage({
   params,
 }: {
   params: {
     colorId: string;
   };
-}) => {
+}) {
   const color = await prismaDb.color.findUnique({
     where: {
       id: params.colorId,
@@ -22,6 +22,4 @@ const ColorPage = async ({
       </div>
     </div>
   );
-};
-
-export default ColorPage;
+}
