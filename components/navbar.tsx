@@ -7,7 +7,7 @@ import { StoreSwitcher } from "@/components/store-switcher";
 import { NavbarRoutes } from "@/components/navbar-routes";
 import { ThemeToggle } from "@/components/theme-toggle";
 
-export const Navbar = async () => {
+export async function Navbar() {
   const { userId } = auth();
 
   if (!userId) {
@@ -32,4 +32,4 @@ export const Navbar = async () => {
       </div>
     </div>
   );
-};
+}

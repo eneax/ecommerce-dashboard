@@ -21,7 +21,7 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 
 const formSchema = z.object({
-  name: z.string().nonempty("The store name is required!"),
+  name: z.string().min(1),
 });
 
 export const StoreModal = () => {
@@ -35,8 +35,8 @@ export const StoreModal = () => {
   const [loading, setLoading] = React.useState(false);
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
-    setLoading(true);
     try {
+      setLoading(true);
       const response = await axios.post("/api/stores", values);
       window.location.assign(`/${response.data.id}`);
     } catch (error) {

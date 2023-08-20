@@ -5,10 +5,10 @@ import { useParams, usePathname } from "next/navigation";
 
 import { cn } from "@/lib/utils";
 
-export const NavbarRoutes = ({
+export function NavbarRoutes({
   className,
   ...props
-}: React.HTMLAttributes<HTMLElement>) => {
+}: React.HTMLAttributes<HTMLElement>) {
   const pathname = usePathname();
   const params = useParams();
 
@@ -76,4 +76,4 @@ export const NavbarRoutes = ({
       ))}
     </nav>
   );
-};
+}

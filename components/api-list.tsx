@@ -3,8 +3,7 @@
 import { useParams } from "next/navigation";
 
 import { useOrigin } from "@/hooks/use-origin";
-import { ApiAlert } from "./api-alert";
-
+import { ApiAlert } from "@/components/api-alert";
 interface ApiListProps {
   entityName: string;
   entityIdName: string;

@@ -1,40 +1,55 @@
-"use client"
+"use client";
 
-import * as React from "react"
-import { useParams, useRouter } from "next/navigation"
-import { Store as StoreIcon, ChevronsUpDown, Check, PlusCircle } from "lucide-react"
+import * as React from "react";
+import { useParams, useRouter } from "next/navigation";
+import { Store, ChevronsUpDown, Check, PlusCircle } from "lucide-react";
 
-import { Store } from "@prisma/client"
-import { cn } from "@/lib/utils"
-import { useStoreModal } from "@/hooks/use-store-modal"
+import { cn } from "@/lib/utils";
+import { useStoreModal } from "@/hooks/use-store-modal";
 
-import { Popover, PopoverTrigger, PopoverContent } from "@/components/ui/popover"
-import { Button } from "@/components/ui/button"
-import { Command, CommandList, CommandInput, CommandEmpty, CommandGroup, CommandItem, CommandSeparator } from "@/components/ui/command"
+import {
+  Popover,
+  PopoverTrigger,
+  PopoverContent,
+} from "@/components/ui/popover";
+import { Button } from "@/components/ui/button";
+import {
+  Command,
+  CommandList,
+  CommandInput,
+  CommandEmpty,
+  CommandGroup,
+  CommandItem,
+  CommandSeparator,
+} from "@/components/ui/command";
 
-type PopoverTriggerProps = React.ComponentPropsWithoutRef<typeof PopoverTrigger>
+type PopoverTriggerProps = React.ComponentPropsWithoutRef<
+  typeof PopoverTrigger
+>;
 
 interface StoreSwitcherProps extends PopoverTriggerProps {
-  items: Store[]
+  items: Record<string, any>[];
 }
 
-export const StoreSwitcher = ({ className, items = [] }: StoreSwitcherProps) => {
-  const params = useParams()
-  const router = useRouter()
-  const storeModal = useStoreModal()
-  const [open, setOpen] = React.useState(false)
+export function StoreSwitcher({ className, items = [] }: StoreSwitcherProps) {
+  const params = useParams();
+  const router = useRouter();
+  const storeModal = useStoreModal();
+  const [open, setOpen] = React.useState(false);
 
   const formattedItems = items.map((item) => ({
     name: item.name,
     value: item.id,
-  }))
+  }));
 
-  const currentStore = formattedItems.find((item) => item.value === params.storeId)
+  const currentStore = formattedItems.find(
+    (item) => item.value === params.storeId
+  );
 
-  const handleStoreSelect = (store: { name: string, value: string }) => {
-    setOpen(false)
-    router.push(`/${store.value}`)
-  }
+  const handleStoreSelect = (store: { name: string; value: string }) => {
+    setOpen(false);
+    router.push(`/${store.value}`);
+  };
 
   return (
     <Popover open={open} onOpenChange={setOpen}>
@@ -47,7 +62,7 @@ export const StoreSwitcher = ({ className, items = [] }: StoreSwitcherProps) => 
           aria-label="Select a store"
           className={cn("w-[200px] justify-between", className)}
         >
-          <StoreIcon className="mr-2 h-4 w-4" />
+          <Store className="mr-2 h-4 w-4" />
           <span>{currentStore?.name}</span>
           <ChevronsUpDown className="ml-auto h-4 w-4 shrink-0 opacity-50" />
         </Button>
@@ -65,9 +80,16 @@ export const StoreSwitcher = ({ className, items = [] }: StoreSwitcherProps) => 
                   onSelect={() => handleStoreSelect(item)}
                   className="text-sm"
                 >
-                  <StoreIcon className="mr-2 w-4 h-4" />
+                  <Store className="mr-2 w-4 h-4" />
                   <span>{item.name}</span>
-                  <Check className={cn("ml-auto w-4 h-4", currentStore?.value === item.value ? "opacity-100" : "opacity-0")} />
+                  <Check
+                    className={cn(
+                      "ml-auto w-4 h-4",
+                      currentStore?.value === item.value
+                        ? "opacity-100"
+                        : "opacity-0"
+                    )}
+                  />
                 </CommandItem>
               ))}
             </CommandGroup>
@@ -77,11 +99,13 @@ export const StoreSwitcher = ({ className, items = [] }: StoreSwitcherProps) => 
 
           <CommandList>
             <CommandGroup>
-              <CommandItem onSelect={() => {
-                setOpen(false)
-                storeModal.onOpen()
-              }}>
-                <PlusCircle className="mr-2 w-4 h-4" />
+              <CommandItem
+                onSelect={() => {
+                  setOpen(false);
+                  storeModal.onOpen();
+                }}
+              >
+                <PlusCircle className="mr-2 w-5 h-5" />
                 <span>Create store</span>
               </CommandItem>
             </CommandGroup>
@@ -89,5 +113,5 @@ export const StoreSwitcher = ({ className, items = [] }: StoreSwitcherProps) => 
         </Command>
       </PopoverContent>
     </Popover>
-  )
+  );
 }
